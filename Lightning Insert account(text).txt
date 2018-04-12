@@ -1,0 +1,102 @@
+//accountInsert.cmp
+<aura:component controller="accountInsert">
+	<div class = "slds-page-header">
+    Welcome to Lightning
+    </div>
+    <table class="slds-table">
+        <thead>
+        <tr>
+        <th scope="col">Account Name</th>
+        <th scope="col">Account Phone</th>
+        <th scope="col">Account Industry</th>
+        <th scope="col">Account Rating</th>
+        <th scope ="col">Account Type</th>         
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+          <!--th scope ="col"><lightning:input type="text" aura:id="name" /></th-->
+           <th scope="col"><ui:inputText aura:id="name"></ui:inputText></th> 
+            <th scope="col"><ui:inputText aura:id="phone"></ui:inputText></th>
+            <th scope="col"><ui:inputText aura:id="industry"></ui:inputText></th>
+            <th scope="col"><ui:inputText aura:id="rating"></ui:inputText></th>
+            <th scope="col"><ui:inputText aura:id="type"></ui:inputText></th>
+            </tr>   
+        </tbody>      
+    </table>
+    <div class="slds-docked-form-footer">
+            <lightning:button variant="brand" label="Save" onclick="{!c.saveContacts}" />
+        </div> 
+</aura:component>
+
+
+
+
+
+
+//accountInsertController.js
+({
+	saveContacts : function(component, event, helper) {
+		var accName = component.find("name").get("v.value");
+        var accPhone = component.find("phone").get("v.value");
+        var accIndustry = component.find("industry").get("v.value");
+        var accRating = component.find("rating").get("v.value");
+        var accType = component.find("type").get("v.value");
+        
+        console.log("Name is :"+accName);
+        console.log("Phone is "+accPhone);
+        console.log("Industry is "+accIndustry);
+        console.log("Rating is "+accRating);
+        console.log("Type is "+accType);
+        
+        var action = component.get("c.setAccount");
+        action.setParams({
+            "name" : accName, "phone" : accPhone, "industry" : accIndustry, "rating" : accRating,
+            "type" : accType
+        });
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            var message = response.getReturnValue();
+            if (state == "SUCCESS")
+            {
+                
+                alert(message);
+            }
+            else
+            {
+                alert(message);
+                
+            }
+        });
+        $A.enqueueAction(action);
+	}
+})
+
+
+
+//accountInsert.apxc
+public class accountInsert {
+    @AuraEnabled
+    public static string setAccount(string name, string phone, string industry, string rating, string type){
+       string message = '';
+        account a = new account();
+        a.Name = name;
+        a.Phone = phone;
+        a.Industry = industry;
+        a.Rating = rating;
+        a.Type = type;
+        if(a!= null)
+        {
+            try
+            {
+                insert a;
+                message = 'Inserted record successfully';
+            } catch(Exception e){
+                message = e.getMessage()+ 'at' +e.getLineNumber();
+            }
+        }
+        
+        
+        return message;
+    }
+}

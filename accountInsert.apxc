@@ -1,0 +1,25 @@
+public class accountInsert {
+    @AuraEnabled
+    public static string setAccount(string name, string phone, string industry, string rating, string type){
+       string message = '';
+        account a = new account();
+        a.Name = name;
+        a.Phone = phone;
+        a.Industry = industry;
+        a.Rating = rating;
+        a.Type = type;
+        if(a!= null)
+        {
+            try
+            {
+                insert a;
+                message = 'Inserted record successfully';
+            } catch(Exception e){
+                message = e.getMessage()+ 'at' +e.getLineNumber();
+            }
+        }
+        
+        
+        return message;
+    }
+}

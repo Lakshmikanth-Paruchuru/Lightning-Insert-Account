@@ -1,0 +1,29 @@
+<aura:component controller="accountInsert">
+	<div class = "slds-page-header">
+    Welcome to Lightning
+    </div>
+    <table class="slds-table">
+        <thead>
+        <tr>
+        <th scope="col">Account Name</th>
+        <th scope="col">Account Phone</th>
+        <th scope="col">Account Industry</th>
+        <th scope="col">Account Rating</th>
+        <th scope ="col">Account Type</th>         
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+          <!--th scope ="col"><lightning:input type="text" aura:id="name" /></th-->
+           <th scope="col"><ui:inputText aura:id="name"></ui:inputText></th> 
+            <th scope="col"><ui:inputText aura:id="phone"></ui:inputText></th>
+            <th scope="col"><ui:inputText aura:id="industry"></ui:inputText></th>
+            <th scope="col"><ui:inputText aura:id="rating"></ui:inputText></th>
+            <th scope="col"><ui:inputText aura:id="type"></ui:inputText></th>
+            </tr>   
+        </tbody>      
+    </table>
+    <div class="slds-docked-form-footer">
+            <lightning:button variant="brand" label="Save" onclick="{!c.saveContacts}" />
+        </div> 
+</aura:component>
